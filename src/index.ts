@@ -1,6 +1,6 @@
 import express from "express";
-import sequelize from "./db-connection";
-import { User } from "./models/User";
+import sequelize from "./database/connection";
+import { User } from "./database/models/User";
 import dotenv from "dotenv";
 
 dotenv.config();
