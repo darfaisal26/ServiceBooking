@@ -1,19 +1,17 @@
 import express from "express";
-import { checkDbConnection } from "./utils/db";
-import userRoutes from "./routes/user.routes";
+import sequelize from "./db-connection";
+import { User } from "./models/User";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+(async () => {
+  await sequelize.sync();
+  console.log("hello");
+})();
 
 const app = express();
 
-checkDbConnection().then((connected) => {
-  if (!connected) {
-    console.error("Database connection failed");
-    process.exit(1);
-  }
-
-  app.use(express.json());
-  app.use("/api", userRoutes);
-
-  app.listen(3000, () => {
-    console.log("Server running on port 3000");
-  });
+app.listen(3000, () => {
+  console.log("Server started on port 3000");
 });
