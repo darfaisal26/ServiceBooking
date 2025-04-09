@@ -1,17 +1,31 @@
 import express from "express";
 import sequelize from "./database/connection";
-import { User } from "./database/models/User";
-import dotenv from "dotenv";
+import logger from "./utils/logger";
+import config from "./config";
 
-dotenv.config();
+const startServer = async () => {
+  try {
+    await sequelize.authenticate();
+    logger.info("Database authenticated successfully");
 
-(async () => {
-  await sequelize.sync();
-  console.log("hello");
-})();
+    const app = express();
 
-const app = express();
+    // Add pre-route middleware
+    app.use(express.json());
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
-});
+    // Add routes
+    // app.use("/api", require("./app/routes"));
+
+    // Add error handling middleware
+    // app.use(require("./app/middlewares/error.middleware"));
+
+    app.listen(config.port, () => {
+      logger.info(`Server running on port ${config.port}`);
+    });
+  } catch (error) {
+    logger.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
