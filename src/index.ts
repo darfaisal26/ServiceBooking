@@ -2,6 +2,7 @@ import express from "express";
 import sequelize from "./database/connection";
 import logger from "./utils/logger";
 import config from "./config";
+import mainRouter from "./app/routes";
 
 const startServer = async () => {
   try {
@@ -10,14 +11,9 @@ const startServer = async () => {
 
     const app = express();
 
-    // Add pre-route middleware
     app.use(express.json());
 
-    // Add routes
-    // app.use("/api", require("./app/routes"));
-
-    // Add error handling middleware
-    // app.use(require("./app/middlewares/error.middleware"));
+    app.use("/api", mainRouter);
 
     app.listen(config.port, () => {
       logger.info(`Server running on port ${config.port}`);
