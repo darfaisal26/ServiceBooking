@@ -8,15 +8,15 @@ import {
   AllowNull,
   ForeignKey,
   BelongsTo,
-} from 'sequelize-typescript';
-import DriverProfile from './DriverProfileModel';
-import WorkerProfile from './WorkerProfileModel';
-import ClientProfile from './ClientProfileModel';
-import ServiceMaster from './ServicesMasterModel';
-import UserAddress from './UserAdressModel';
+} from "sequelize-typescript";
+import DriverProfile from "./DriverProfileModel";
+import WorkerProfile from "./WorkerProfileModel";
+import ClientProfile from "./ClientProfileModel";
+import ServiceMaster from "./ServicesMasterModel";
+import UserAddress from "./UserAdressModel";
 
 @Table({
-  tableName: 'bookings',
+  tableName: "bookings",
   timestamps: false,
 })
 export default class Booking extends Model<Booking> {
@@ -45,11 +45,6 @@ export default class Booking extends Model<Booking> {
   @Column(DataType.INTEGER)
   service_id!: number;
 
-  @ForeignKey(() => ClientProfile)
-  @AllowNull(true)
-  @Column(DataType.INTEGER)
-  reviewer_id?: number;
-
   @ForeignKey(() => UserAddress)
   @AllowNull(false)
   @Column(DataType.INTEGER)
@@ -68,8 +63,21 @@ export default class Booking extends Model<Booking> {
   booking_date!: string;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('Pending', 'Confirmed', 'In Progress', 'Completed', 'Cancelled'))
-  booking_status!: 'Pending' | 'Confirmed' | 'In Progress' | 'Completed' | 'Cancelled';
+  @Column(
+    DataType.ENUM(
+      "Pending",
+      "Confirmed",
+      "In Progress",
+      "Completed",
+      "Cancelled"
+    )
+  )
+  booking_status!:
+    | "Pending"
+    | "Confirmed"
+    | "In Progress"
+    | "Completed"
+    | "Cancelled";
 
   @AllowNull(false)
   @Column(DataType.BOOLEAN)
@@ -93,11 +101,8 @@ export default class Booking extends Model<Booking> {
   @BelongsTo(() => WorkerProfile)
   worker!: WorkerProfile;
 
-  @BelongsTo(() => ClientProfile, { foreignKey: 'client_id' })
+  @BelongsTo(() => ClientProfile, { foreignKey: "client_id" })
   client!: ClientProfile;
-
-  @BelongsTo(() => ClientProfile, { foreignKey: 'reviewer_id' })
-  reviewer!: ClientProfile;
 
   @BelongsTo(() => ServiceMaster)
   service!: ServiceMaster;
