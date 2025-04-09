@@ -13,6 +13,7 @@ import {
 } from "sequelize-typescript";
 import Role from "./RoleModel";
 import Gender from "./GenderMasterModel";
+import GenderMaster from "./GenderMasterModel";
 
 @Table({
   tableName: "users",
@@ -61,6 +62,9 @@ export default class User extends Model<User> {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   gender_id!: number;
+
+  @BelongsTo(() => GenderMaster) // 👈 sets up access to Role data
+  gender!: GenderMaster;
 
   @AllowNull(true)
   @Column(DataType.STRING)
