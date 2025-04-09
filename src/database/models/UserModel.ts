@@ -9,12 +9,13 @@ import {
   AllowNull,
   Unique,
   ForeignKey,
-} from 'sequelize-typescript';
-import Role from './RoleModel';
-import Gender from './GenderMasterModel';
+  BelongsTo,
+} from "sequelize-typescript";
+import Role from "./RoleModel";
+import Gender from "./GenderMasterModel";
 
 @Table({
-  tableName: 'users',
+  tableName: "users",
   timestamps: false,
 })
 export default class User extends Model<User> {
@@ -52,6 +53,9 @@ export default class User extends Model<User> {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   roleid!: number;
+
+  @BelongsTo(() => Role) // 👈 sets up access to Role data
+  role!: Role;
 
   @ForeignKey(() => Gender)
   @AllowNull(false)

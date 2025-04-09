@@ -7,10 +7,12 @@ import {
   AutoIncrement,
   DataType,
   AllowNull,
+  HasMany,
 } from 'sequelize-typescript';
+import User from './UserModel';
 
 @Table({
-  tableName: 'roles',
+  tableName: "roles",
   timestamps: false,
 })
 export default class Role extends Model<Role> {
@@ -22,4 +24,7 @@ export default class Role extends Model<Role> {
   @AllowNull(false)
   @Column(DataType.STRING(100))
   role_name!: string;
+
+  @HasMany(() => User) // 👈 defines one-to-many relation
+  users!: User[];
 }
