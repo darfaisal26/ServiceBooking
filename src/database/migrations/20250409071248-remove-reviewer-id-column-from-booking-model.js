@@ -11,7 +11,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model: "client_profiles", // replace with actual table name if different
+        model: "bookings", // replace with actual table name if different
         key: "id",
       },
       onUpdate: "CASCADE",
