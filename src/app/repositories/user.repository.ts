@@ -1,3 +1,4 @@
+import GenderMaster from "../../database/models/GenderMasterModel";
 import Role from "../../database/models/RoleModel";
 import User from "../../database/models/UserModel";
 export const findAllUsers = async () => {
@@ -7,6 +8,10 @@ export const findAllUsers = async () => {
         {
           model: Role,
           attributes: ["role_name"],
+        },
+        {
+          model: GenderMaster,
+          attributes: ["gender_name"],
         },
       ],
     });
